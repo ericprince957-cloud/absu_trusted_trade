@@ -51,7 +51,7 @@ const sellers: Seller[] = [
     name: "Uchechukwu Divine Chidiamara",
     category: 'Beauty',
     description: 'Oil perfumes & professional nail tech services. Look and smell amazing on campus!',
-    whatsapp: '2347084547988', // TODO: REPLACE WITH DIVINE'S ACTUAL WHATSAPP NUMBER
+    whatsapp: '2347013519900',
     verified: true,
   },
 ];
