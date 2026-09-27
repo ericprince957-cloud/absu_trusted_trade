@@ -170,6 +170,11 @@ body {
   color: #065f46;
 }
 
+.badge-webdev {
+  background-color: #ede9fe;
+  color: #5b21b6;
+}
+
 /* Fade in animation for sections */
 @keyframes fadeInUp {
   from {
