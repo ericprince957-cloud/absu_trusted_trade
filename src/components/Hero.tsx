@@ -1,7 +1,6 @@
 /**
  * Hero Section Component
  * Main landing area with headline, sub-headline, and CTA buttons.
- * Features abstract background pattern.
  */
 export default function Hero() {
   return (
@@ -38,7 +37,6 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            {/* Primary Button - Scrolls to listings */}
             <a
               href="#directory"
               className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/25 transition-all duration-300 text-base"
@@ -49,7 +47,6 @@ export default function Hero() {
               Find a Seller
             </a>
 
-            {/* Secondary Button - Links to apply section */}
             <a
               href="#apply"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white font-semibold rounded-xl transition-all duration-300 text-base"
@@ -82,7 +79,7 @@ export default function Hero() {
       {/* Bottom wave divider */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-          <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" fill="white" />
+          <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" className="fill-white dark:fill-gray-50" />
         </svg>
       </div>
     </section>

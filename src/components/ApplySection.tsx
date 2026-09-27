@@ -1,16 +1,11 @@
 /**
  * Apply Section Component
  * Allows sellers to apply to be listed on the platform.
- * Clicking the button opens WhatsApp or Telegram with a pre-filled message.
  */
 export default function ApplySection() {
-  // ========================================
-  // ADMIN CONTACT DETAILS
-  // ========================================
-  const adminWhatsApp = '2347084547988'; // Nigerian format: 07084547988 → 2347084547988
+  const adminWhatsApp = '2347084547988';
   const adminTelegram = 'https://t.me/Vectorcodes';
 
-  // Custom pre-filled messages
   const whatsappMessage = encodeURIComponent(
     'Hi Vector Codes! 👋\n\nI want to apply to be a verified seller on ABSU Trusted Trades.\n\nMy details:\n• Name: \n• What I sell: \n• Department/Level: \n\nLooking forward to joining! 🙏'
   );
@@ -23,14 +18,13 @@ export default function ApplySection() {
   const telegramLink = `${adminTelegram}?text=${telegramMessage}`;
 
   return (
-    <section id="apply" className="py-16 sm:py-20 lg:py-24 bg-white">
+    <section id="apply" className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-[#0f1b2d]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0f2b4a] via-[#1a3f6b] to-[#0f2b4a]">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0f2b4a] via-[#1a3f6b] to-[#0f2b4a] dark:from-[#1a1a2e] dark:via-[#16213e] dark:to-[#0f3460]">
           {/* Background decorative elements */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-            {/* Grid pattern overlay */}
             <div className="absolute inset-0 opacity-5" style={{
               backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
               backgroundSize: '24px 24px'
@@ -77,9 +71,8 @@ export default function ApplySection() {
               </span>
             </div>
 
-            {/* CTA Buttons - WhatsApp & Telegram */}
+            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              {/* WhatsApp Button */}
               <a
                 href={whatsappLink}
                 target="_blank"
@@ -92,7 +85,6 @@ export default function ApplySection() {
                 Apply via WhatsApp
               </a>
 
-              {/* Telegram Button */}
               <a
                 href={telegramLink}
                 target="_blank"
@@ -118,7 +110,6 @@ export default function ApplySection() {
               </div>
             </div>
 
-            {/* Subtext */}
             <p className="mt-6 text-xs text-blue-200/50">
               You'll be redirected to WhatsApp or Telegram to send your application.
             </p>
