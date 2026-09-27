@@ -5,46 +5,35 @@
  */
 
 // ========================================
-// ADMIN / SELLER WHATSAPP CONFIG
-// Replace these numbers with actual seller WhatsApp numbers
-// Format: Country code + number (no + or spaces)
-// Nigerian format: 07084547988 → 2347084547988
+// SELLER DATA
 // ========================================
 
 // Seller data type
 interface Seller {
   id: number;
   name: string;
-  category: 'Books' | 'Food' | 'Services';
+  category: 'Textbooks' | 'Web Development' | 'Food' | 'Services';
   description: string;
-  whatsapp: string; // WhatsApp number with country code
+  whatsapp: string; // WhatsApp number with country code (no + or spaces)
   verified: boolean;
 }
 
-// Placeholder seller data – REPLACE WITH REAL DATA
+// Seller listings – UPDATE THESE WITH REAL SELLER DATA
 const sellers: Seller[] = [
   {
     id: 1,
-    name: "Chinedu's Textbooks",
-    category: 'Books',
-    description: 'Selling 100-level Engineering books in good condition. GST, MTH, and PHY textbooks available at affordable prices.',
-    whatsapp: '2347084547988', // REPLACE THIS WITH SELLER'S ACTUAL WHATSAPP NUMBER
+    name: "Chinedu Books",
+    category: 'Textbooks',
+    description: 'Affordable 100-level Engineering and Arts books.',
+    whatsapp: '2348011112222',
     verified: true,
   },
   {
     id: 2,
-    name: "Mama Nkechi's Kitchen",
-    category: 'Food',
-    description: 'Delicious home-cooked meals delivered to your hostel. Jollof rice, fried rice, and swallow available daily.',
-    whatsapp: '2347084547988', // REPLACE THIS WITH SELLER'S ACTUAL WHATSAPP NUMBER
-    verified: true,
-  },
-  {
-    id: 3,
-    name: "TechFix by Emeka",
-    category: 'Services',
-    description: 'Phone and laptop repairs at student-friendly prices. Screen replacement, software fixes, and data recovery.',
-    whatsapp: '2347084547988', // REPLACE THIS WITH SELLER'S ACTUAL WHATSAPP NUMBER
+    name: "Vector Codes",
+    category: 'Web Development',
+    description: 'Build standard websites.',
+    whatsapp: '2347084547988', // 07084547988 in international format
     verified: true,
   },
 ];
@@ -52,12 +41,14 @@ const sellers: Seller[] = [
 // Get badge class based on category
 function getBadgeClass(category: string): string {
   switch (category) {
-    case 'Books':
+    case 'Textbooks':
       return 'badge-books';
     case 'Food':
       return 'badge-food';
     case 'Services':
       return 'badge-services';
+    case 'Web Development':
+      return 'badge-webdev';
     default:
       return 'bg-gray-100 text-gray-700';
   }
@@ -66,10 +57,16 @@ function getBadgeClass(category: string): string {
 // Get category icon
 function getCategoryIcon(category: string) {
   switch (category) {
-    case 'Books':
+    case 'Textbooks':
       return (
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      );
+    case 'Web Development':
+      return (
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
       );
     case 'Food':
@@ -149,7 +146,7 @@ export default function Directory() {
 
                 {/* WhatsApp Contact Button with custom message */}
                 <a
-                  href={`https://wa.me/${seller.whatsapp}?text=${encodeURIComponent(`Hi! 👋 I found your listing on ABSU Trusted Trades.\n\nI'm interested in "${seller.name}".\n\nCan you tell me more about what you have available? 🙏`)}` }
+                  href={`https://wa.me/${seller.whatsapp}?text=${encodeURIComponent(`Hi! 👋 I found your listing on ABSU Trusted Trades.\n\nI'm interested in "${seller.name}" (${seller.category}).\n\nCan you tell me more about what you offer? 🙏`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="whatsapp-btn w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-white font-semibold rounded-xl text-sm"
