@@ -4,6 +4,13 @@
  * Each card shows seller info, category, description, and WhatsApp contact.
  */
 
+// ========================================
+// ADMIN / SELLER WHATSAPP CONFIG
+// Replace these numbers with actual seller WhatsApp numbers
+// Format: Country code + number (no + or spaces)
+// Nigerian format: 07084547988 → 2347084547988
+// ========================================
+
 // Seller data type
 interface Seller {
   id: number;
@@ -21,7 +28,7 @@ const sellers: Seller[] = [
     name: "Chinedu's Textbooks",
     category: 'Books',
     description: 'Selling 100-level Engineering books in good condition. GST, MTH, and PHY textbooks available at affordable prices.',
-    whatsapp: '2348012345678', // REPLACE THIS WITH YOUR OWN WHATSAPP NUMBER
+    whatsapp: '2347084547988', // REPLACE THIS WITH SELLER'S ACTUAL WHATSAPP NUMBER
     verified: true,
   },
   {
@@ -29,7 +36,7 @@ const sellers: Seller[] = [
     name: "Mama Nkechi's Kitchen",
     category: 'Food',
     description: 'Delicious home-cooked meals delivered to your hostel. Jollof rice, fried rice, and swallow available daily.',
-    whatsapp: '2348012345678', // REPLACE THIS WITH YOUR OWN WHATSAPP NUMBER
+    whatsapp: '2347084547988', // REPLACE THIS WITH SELLER'S ACTUAL WHATSAPP NUMBER
     verified: true,
   },
   {
@@ -37,7 +44,7 @@ const sellers: Seller[] = [
     name: "TechFix by Emeka",
     category: 'Services',
     description: 'Phone and laptop repairs at student-friendly prices. Screen replacement, software fixes, and data recovery.',
-    whatsapp: '2348012345678', // REPLACE THIS WITH YOUR OWN WHATSAPP NUMBER
+    whatsapp: '2347084547988', // REPLACE THIS WITH SELLER'S ACTUAL WHATSAPP NUMBER
     verified: true,
   },
 ];
@@ -140,9 +147,9 @@ export default function Directory() {
                   {seller.description}
                 </p>
 
-                {/* WhatsApp Contact Button */}
+                {/* WhatsApp Contact Button with custom message */}
                 <a
-                  href={`https://wa.me/${seller.whatsapp}?text=${encodeURIComponent('Hi, I found you on ABSU Trusted Trades. I\'m interested in your services.')}`}
+                  href={`https://wa.me/${seller.whatsapp}?text=${encodeURIComponent(`Hi! 👋 I found your listing on ABSU Trusted Trades.\n\nI'm interested in "${seller.name}".\n\nCan you tell me more about what you have available? 🙏`)}` }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="whatsapp-btn w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-white font-semibold rounded-xl text-sm"
