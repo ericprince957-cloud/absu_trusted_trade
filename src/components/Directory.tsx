@@ -14,7 +14,7 @@ import { useState } from 'react';
 interface Seller {
   id: number;
   name: string;
-  category: 'Textbooks' | 'Web Development' | 'Fashion' | 'Food' | 'Services';
+  category: 'Textbooks' | 'Web Development' | 'Fashion' | 'Beauty' | 'Food' | 'Services';
   description: string;
   whatsapp: string; // WhatsApp number with country code (no + or spaces)
   verified: boolean;
@@ -46,6 +46,14 @@ const sellers: Seller[] = [
     whatsapp: '2349047587912',
     verified: true,
   },
+  {
+    id: 4,
+    name: "Uchechukwu Divine Chidiamara",
+    category: 'Beauty',
+    description: 'Oil perfumes & professional nail tech services. Look and smell amazing on campus!',
+    whatsapp: '2347084547988', // TODO: REPLACE WITH DIVINE'S ACTUAL WHATSAPP NUMBER
+    verified: true,
+  },
 ];
 
 // All available categories (derived from seller data)
@@ -64,6 +72,8 @@ function getBadgeClass(category: string): string {
       return 'badge-webdev';
     case 'Fashion':
       return 'badge-fashion';
+    case 'Beauty':
+      return 'badge-beauty';
     default:
       return 'bg-gray-100 text-gray-700';
   }
@@ -88,6 +98,12 @@ function getCategoryIcon(category: string) {
       return (
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+        </svg>
+      );
+    case 'Beauty':
+      return (
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
         </svg>
       );
     case 'Food':

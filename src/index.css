@@ -180,6 +180,11 @@ body {
   color: #9d174d;
 }
 
+.badge-beauty {
+  background-color: #fdf2f8;
+  color: #be185d;
+}
+
 /* Fade in animation for sections */
 @keyframes fadeInUp {
   from {
