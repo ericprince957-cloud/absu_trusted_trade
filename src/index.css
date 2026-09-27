@@ -175,6 +175,11 @@ body {
   color: #5b21b6;
 }
 
+.badge-fashion {
+  background-color: #fce7f3;
+  color: #9d174d;
+}
+
 /* Fade in animation for sections */
 @keyframes fadeInUp {
   from {
