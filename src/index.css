@@ -5,6 +5,9 @@
    Tailwind CSS v4 with @tailwindcss/vite
    ============================================ */
 
+/* Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Custom Theme Tokens */
 @theme {
   --color-absu-blue: #0f2b4a;
@@ -214,4 +217,45 @@ body {
 
 .whatsapp-btn:active {
   transform: scale(0.98);
+}
+
+/* Dark mode badge adjustments */
+.dark .badge-books {
+  background-color: #1e3a5f;
+  color: #93c5fd;
+}
+
+.dark .badge-food {
+  background-color: #451a03;
+  color: #fbbf24;
+}
+
+.dark .badge-services {
+  background-color: #064e3b;
+  color: #6ee7b7;
+}
+
+.dark .badge-webdev {
+  background-color: #2e1065;
+  color: #c4b5fd;
+}
+
+.dark .badge-fashion {
+  background-color: #500724;
+  color: #f9a8d4;
+}
+
+.dark .badge-beauty {
+  background-color: #500724;
+  color: #f9a8d4;
+}
+
+/* Dark mode card hover */
+.dark .seller-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Smooth transition for theme switching */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
 }

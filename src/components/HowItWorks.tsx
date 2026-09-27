@@ -14,7 +14,7 @@ export default function HowItWorks() {
         </svg>
       ),
       color: 'from-blue-500 to-blue-600',
-      bgColor: 'bg-blue-50',
+      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
     },
     {
       number: '02',
@@ -26,7 +26,7 @@ export default function HowItWorks() {
         </svg>
       ),
       color: 'from-orange-500 to-orange-600',
-      bgColor: 'bg-orange-50',
+      bgColor: 'bg-orange-50 dark:bg-orange-900/20',
     },
     {
       number: '03',
@@ -38,22 +38,22 @@ export default function HowItWorks() {
         </svg>
       ),
       color: 'from-green-500 to-green-600',
-      bgColor: 'bg-green-50',
+      bgColor: 'bg-green-50 dark:bg-green-900/20',
     },
   ];
 
   return (
-    <section id="how-it-works" className="py-16 sm:py-20 lg:py-24 bg-white">
+    <section id="how-it-works" className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-[#0f1b2d]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <span className="inline-block text-sm font-semibold text-orange-500 uppercase tracking-wider mb-3">
             Simple Process
           </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0f2b4a] mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0f2b4a] dark:text-white mb-4">
             How It Works
           </h2>
-          <p className="text-gray-600 text-base sm:text-lg">
+          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
             Three simple steps to buy safely from trusted ABSU students.
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function HowItWorks() {
             >
               {/* Connector line (desktop only) */}
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-16 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-gray-200 to-gray-100"></div>
+                <div className="hidden md:block absolute top-16 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-gray-200 dark:from-gray-700 to-gray-100 dark:to-gray-800"></div>
               )}
 
               <div className="text-center">
@@ -81,17 +81,17 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Step Number */}
-                <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+                <div className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">
                   Step {step.number}
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg sm:text-xl font-bold text-[#0f2b4a] mb-3">
+                <h3 className="text-lg sm:text-xl font-bold text-[#0f2b4a] dark:text-white mb-3">
                   {step.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-xs mx-auto">
+                <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed max-w-xs mx-auto">
                   {step.description}
                 </p>
               </div>

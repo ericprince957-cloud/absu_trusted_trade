@@ -5,14 +5,16 @@
  * Lists trusted student sellers for textbooks, food, and services.
  * 
  * Architecture:
- * - Header.tsx      → Sticky navigation with logo and links
- * - Hero.tsx        → Landing section with headline and CTAs
- * - HowItWorks.tsx  → 3-step explanation of the process
- * - Directory.tsx   → Grid of verified seller cards
+ * - ThemeContext.tsx  → Dark/Light mode state management
+ * - Header.tsx       → Sticky navigation with logo, links, and theme toggle
+ * - Hero.tsx         → Landing section with headline and CTAs
+ * - HowItWorks.tsx   → 3-step explanation of the process
+ * - Directory.tsx    → Grid of verified seller cards with category filter
  * - ApplySection.tsx → Call-to-action for new sellers
- * - Footer.tsx      → Branding, copyright, and social links
+ * - Footer.tsx       → Branding, copyright, and social links
  */
 
+import { ThemeProvider } from './ThemeContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import HowItWorks from './components/HowItWorks';
@@ -22,27 +24,29 @@ import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white font-['Inter',sans-serif]">
-      {/* Sticky Navigation Header */}
-      <Header />
+    <ThemeProvider>
+      <div className="min-h-screen bg-white dark:bg-[#0a1525] font-['Inter',sans-serif] transition-colors duration-300">
+        {/* Sticky Navigation Header */}
+        <Header />
 
-      {/* Main Content */}
-      <main>
-        {/* Hero Section - Landing area */}
-        <Hero />
+        {/* Main Content */}
+        <main>
+          {/* Hero Section - Landing area */}
+          <Hero />
 
-        {/* How It Works - 3 steps explanation */}
-        <HowItWorks />
+          {/* How It Works - 3 steps explanation */}
+          <HowItWorks />
 
-        {/* Directory - Core feature with seller cards */}
-        <Directory />
+          {/* Directory - Core feature with seller cards */}
+          <Directory />
 
-        {/* Apply Section - For sellers to join */}
-        <ApplySection />
-      </main>
+          {/* Apply Section - For sellers to join */}
+          <ApplySection />
+        </main>
 
-      {/* Footer */}
-      <Footer />
-    </div>
+        {/* Footer */}
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }
