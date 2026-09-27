@@ -212,7 +212,7 @@ export default function Directory() {
         </div>
 
         {/* Seller Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
           {filteredSellers.map((seller) => (
             <article
               key={seller.id}
@@ -242,7 +242,7 @@ export default function Directory() {
                 </div>
 
                 {/* Seller Name */}
-                <h3 className="text-lg sm:text-xl font-bold text-[#0f2b4a] mb-2">
+                <h3 className="text-lg sm:text-xl font-bold text-[#0f2b4a] mb-2 break-words">
                   {seller.name}
                 </h3>
 
