@@ -1,7 +1,9 @@
+import { useState } from 'react';
+
 /**
  * Directory Section Component
  * The core feature – displays verified seller cards in a responsive grid.
- * Each card shows seller info, category, description, and WhatsApp contact.
+ * Includes a category filter bar for easy navigation.
  */
 
 // ========================================
@@ -12,13 +14,13 @@
 interface Seller {
   id: number;
   name: string;
-  category: 'Textbooks' | 'Web Development' | 'Food' | 'Services';
+  category: 'Textbooks' | 'Web Development' | 'Fashion' | 'Food' | 'Services';
   description: string;
   whatsapp: string; // WhatsApp number with country code (no + or spaces)
   verified: boolean;
 }
 
-// Seller listings – UPDATE THESE WITH REAL SELLER DATA
+// All seller listings
 const sellers: Seller[] = [
   {
     id: 1,
@@ -33,10 +35,21 @@ const sellers: Seller[] = [
     name: "Vector Codes",
     category: 'Web Development',
     description: 'Build standard websites.',
-    whatsapp: '2347084547988', // 07084547988 in international format
+    whatsapp: '2347084547988',
+    verified: true,
+  },
+  {
+    id: 3,
+    name: "Egbeike Precious Chukwuebuka",
+    category: 'Fashion',
+    description: 'Quality Kaftans, Scrubs, Shirts & Trousers for ABSU students.',
+    whatsapp: '2349047587912',
     verified: true,
   },
 ];
+
+// All available categories (derived from seller data)
+const allCategories = ['All', ...Array.from(new Set(sellers.map(s => s.category)))];
 
 // Get badge class based on category
 function getBadgeClass(category: string): string {
@@ -49,6 +62,8 @@ function getBadgeClass(category: string): string {
       return 'badge-services';
     case 'Web Development':
       return 'badge-webdev';
+    case 'Fashion':
+      return 'badge-fashion';
     default:
       return 'bg-gray-100 text-gray-700';
   }
@@ -69,6 +84,12 @@ function getCategoryIcon(category: string) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
       );
+    case 'Fashion':
+      return (
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+        </svg>
+      );
     case 'Food':
       return (
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -87,12 +108,34 @@ function getCategoryIcon(category: string) {
   }
 }
 
+// Get filter icon for category buttons
+function getFilterIcon(category: string) {
+  switch (category) {
+    case 'All':
+      return (
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+      );
+    default:
+      return getCategoryIcon(category);
+  }
+}
+
 export default function Directory() {
+  // State for active category filter
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  // Filter sellers based on selected category
+  const filteredSellers = activeCategory === 'All'
+    ? sellers
+    : sellers.filter(seller => seller.category === activeCategory);
+
   return (
     <section id="directory" className="py-16 sm:py-20 lg:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <span className="inline-block text-sm font-semibold text-orange-500 uppercase tracking-wider mb-3">
             Marketplace
           </span>
@@ -104,9 +147,57 @@ export default function Directory() {
           </p>
         </div>
 
+        {/* ========================================
+            CATEGORY FILTER BAR
+            Click a category to filter sellers
+            ======================================== */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
+          {allCategories.map((category) => {
+            const isActive = activeCategory === category;
+            const count = category === 'All'
+              ? sellers.length
+              : sellers.filter(s => s.category === category).length;
+
+            return (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`
+                  inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-semibold
+                  transition-all duration-200 border
+                  ${isActive
+                    ? 'bg-[#0f2b4a] text-white border-[#0f2b4a] shadow-md shadow-blue-900/20'
+                    : 'bg-white text-gray-600 border-gray-200 hover:border-[#0f2b4a]/30 hover:text-[#0f2b4a] hover:bg-blue-50/50'
+                  }
+                `}
+              >
+                {getFilterIcon(category)}
+                <span>{category}</span>
+                <span className={`
+                  ml-0.5 text-[10px] font-bold px-1.5 py-0.5 rounded-full
+                  ${isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}
+                `}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Results count */}
+        <div className="text-center mb-6">
+          <p className="text-sm text-gray-500">
+            Showing <span className="font-semibold text-[#0f2b4a]">{filteredSellers.length}</span>{' '}
+            {filteredSellers.length === 1 ? 'seller' : 'sellers'}
+            {activeCategory !== 'All' && (
+              <span> in <span className="font-semibold text-[#0f2b4a]">{activeCategory}</span></span>
+            )}
+          </p>
+        </div>
+
         {/* Seller Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {sellers.map((seller) => (
+          {filteredSellers.map((seller) => (
             <article
               key={seller.id}
               className="seller-card bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm"
@@ -161,6 +252,19 @@ export default function Directory() {
             </article>
           ))}
         </div>
+
+        {/* Empty state when no sellers match filter */}
+        {filteredSellers.length === 0 && (
+          <div className="text-center py-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
+              <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <p className="text-gray-500 text-lg font-medium">No sellers in this category yet.</p>
+            <p className="text-gray-400 text-sm mt-1">Check back soon or try another category.</p>
+          </div>
+        )}
 
         {/* Bottom note */}
         <div className="mt-10 text-center">
