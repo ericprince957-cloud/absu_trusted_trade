@@ -9,7 +9,7 @@
  * - Header.tsx       → Sticky navigation with logo, links, and theme toggle
  * - Hero.tsx         → Landing section with headline and CTAs
  * - HowItWorks.tsx   → 3-step explanation of the process
- * - Directory.tsx    → Grid of verified seller cards with category filter
+ * - Directory.tsx    → Grid of verified seller cards
  * - ApplySection.tsx → Call-to-action for new sellers
  * - Footer.tsx       → Branding, copyright, and social links
  */

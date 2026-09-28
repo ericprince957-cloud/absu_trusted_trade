@@ -2,30 +2,21 @@ import { useState } from 'react';
 
 /**
  * Directory Section Component
- * The core feature – displays verified seller cards in a responsive grid.
- * Includes a category filter bar for easy navigation.
+ * Simple seller directory - sellers will upload products themselves later.
  */
 
 // Seller data type
 interface Seller {
   id: number;
   name: string;
-  category: 'Textbooks' | 'Web Development' | 'Fashion' | 'Beauty' | 'Food' | 'Services';
+  category: 'Web Development' | 'Fashion' | 'Beauty' | 'Food' | 'Services';
   description: string;
   whatsapp: string;
   verified: boolean;
 }
 
-// All seller listings
+// Seller listings (no prices - sellers will upload products later)
 const sellers: Seller[] = [
-  {
-    id: 1,
-    name: "Chinedu Books",
-    category: 'Textbooks',
-    description: 'Affordable 100-level Engineering and Arts books.',
-    whatsapp: '2348011112222',
-    verified: true,
-  },
   {
     id: 2,
     name: "Vector Codes",
@@ -64,7 +55,6 @@ const allCategories = ['All', ...Array.from(new Set(sellers.map(s => s.category)
 
 function getBadgeClass(category: string): string {
   switch (category) {
-    case 'Textbooks': return 'badge-books';
     case 'Food': return 'badge-food';
     case 'Services': return 'badge-services';
     case 'Web Development': return 'badge-webdev';
@@ -76,12 +66,6 @@ function getBadgeClass(category: string): string {
 
 function getCategoryIcon(category: string) {
   switch (category) {
-    case 'Textbooks':
-      return (
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-      );
     case 'Web Development':
       return (
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -130,7 +114,7 @@ function getFilterIcon(category: string) {
 
 export default function Directory() {
   const [activeCategory, setActiveCategory] = useState('All');
-  const filteredSellers = activeCategory === 'All' ? sellers : sellers.filter(seller => seller.category === activeCategory);
+  const filteredSellers = activeCategory === 'All' ? sellers : sellers.filter(s => s.category === activeCategory);
 
   return (
     <section id="directory" className="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-[#0a1525]">
