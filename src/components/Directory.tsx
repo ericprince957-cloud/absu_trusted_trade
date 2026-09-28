@@ -50,6 +50,14 @@ const sellers: Seller[] = [
     whatsapp: '2347013519900',
     verified: true,
   },
+  {
+    id: 5,
+    name: "Udo Favour Chinoyeremu",
+    category: 'Fashion',
+    description: "Women's wear, shoes, bags, men's wear and jewelry. Public Health 100lvl.",
+    whatsapp: '2347064580909',
+    verified: true,
+  },
 ];
 
 const allCategories = ['All', ...Array.from(new Set(sellers.map(s => s.category)))];
