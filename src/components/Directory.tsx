@@ -1,114 +1,60 @@
 import { useState } from 'react';
-import { useCart } from '../CartContext';
-import ProductModal from './ProductModal';
 
 /**
  * Directory Section Component
- * Marketplace grid with products, prices, and Add to Cart functionality.
+ * Simple seller directory - sellers will upload products themselves later.
  */
 
-// Product data type with pricing
-interface Product {
+// Seller data type
+interface Seller {
   id: number;
   name: string;
-  seller: string;
-  category: 'Textbooks' | 'Web Development' | 'Fashion' | 'Beauty' | 'Food' | 'Services';
+  category: 'Web Development' | 'Fashion' | 'Beauty' | 'Food' | 'Services';
   description: string;
-  price: number;
   whatsapp: string;
   verified: boolean;
-  image?: string;
 }
 
-// Product listings with prices
-const products: Product[] = [
-  {
-    id: 1,
-    name: "100-Level Engineering Books Bundle",
-    seller: "Chinedu Books",
-    category: 'Textbooks',
-    description: 'Complete set of 100-level Engineering textbooks including GST, MTH, and PHY. All books in excellent condition with minimal highlighting.',
-    price: 8500,
-    whatsapp: '2348011112222',
-    verified: true,
-  },
+// Seller listings (no prices - sellers will upload products later)
+const sellers: Seller[] = [
   {
     id: 2,
-    name: "Professional Website Development",
-    seller: "Vector Codes",
+    name: "Vector Codes",
     category: 'Web Development',
-    description: 'Full-stack website development service. Responsive design, modern UI/UX, and deployment included. Perfect for student businesses and portfolios.',
-    price: 25000,
+    description: 'Build standard websites.',
     whatsapp: '2347084547988',
     verified: true,
   },
   {
     id: 3,
-    name: "Premium Kaftan Set",
-    seller: "Egbeike Precious Chukwuebuka",
+    name: "Egbeike Precious Chukwuebuka",
     category: 'Fashion',
-    description: 'High-quality kaftan with matching trousers. Available in multiple colors and sizes. Perfect for lectures, events, and casual wear.',
-    price: 12000,
+    description: 'Quality Kaftans, Scrubs, Shirts & Trousers for ABSU students.',
     whatsapp: '2349047587912',
     verified: true,
   },
   {
     id: 4,
-    name: "Luxury Oil Perfume (10ml)",
-    seller: "Uchechukwu Divine Chidiamara",
+    name: "Uchechukwu Divine Chidiamara",
     category: 'Beauty',
-    description: 'Long-lasting oil perfume in elegant bottle. Multiple scents available. Perfect for students who want to smell amazing all day.',
-    price: 3500,
+    description: 'Oil perfumes & professional nail tech services. Look and smell amazing on campus!',
     whatsapp: '2347013519900',
     verified: true,
   },
   {
     id: 5,
-    name: "Women's Elegant Dress",
-    seller: "Udo Favour Chinoyeremu",
+    name: "Udo Favour Chinoyeremu",
     category: 'Fashion',
-    description: 'Stylish women\'s dress perfect for lectures, parties, and events. Available in various sizes and colors. Quality fabric with excellent finishing.',
-    price: 8000,
+    description: "Women's wear, shoes, bags, men's wear and jewelry. Public Health 100lvl.",
     whatsapp: '2347064580909',
-    verified: true,
-  },
-  {
-    id: 6,
-    name: "Professional Nail Art Service",
-    seller: "Uchechukwu Divine Chidiamara",
-    category: 'Beauty',
-    description: 'Professional nail tech service including manicure, pedicure, and nail art. Various designs available. Book your appointment today!',
-    price: 5000,
-    whatsapp: '2347013519900',
-    verified: true,
-  },
-  {
-    id: 7,
-    name: "Men's Casual Shoes",
-    seller: "Udo Favour Chinoyeremu",
-    category: 'Fashion',
-    description: 'Comfortable and stylish men\'s casual shoes. Perfect for daily wear on campus. Durable material with modern design.',
-    price: 15000,
-    whatsapp: '2347064580909',
-    verified: true,
-  },
-  {
-    id: 8,
-    name: "Arts & Social Sciences Books",
-    seller: "Chinedu Books",
-    category: 'Textbooks',
-    description: 'Collection of 200-level Arts and Social Sciences textbooks. Well-maintained with clear print. Great for English, Political Science, and Sociology students.',
-    price: 6500,
-    whatsapp: '2348011112222',
     verified: true,
   },
 ];
 
-const allCategories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
+const allCategories = ['All', ...Array.from(new Set(sellers.map(s => s.category)))];
 
 function getBadgeClass(category: string): string {
   switch (category) {
-    case 'Textbooks': return 'badge-books';
     case 'Food': return 'badge-food';
     case 'Services': return 'badge-services';
     case 'Web Development': return 'badge-webdev';
@@ -120,12 +66,6 @@ function getBadgeClass(category: string): string {
 
 function getCategoryIcon(category: string) {
   switch (category) {
-    case 'Textbooks':
-      return (
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-      );
     case 'Web Development':
       return (
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -172,28 +112,9 @@ function getFilterIcon(category: string) {
   return getCategoryIcon(category);
 }
 
-function formatPrice(price: number): string {
-  return `₦${price.toLocaleString()}`;
-}
-
 export default function Directory() {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const { addToCart } = useCart();
-
-  const filteredProducts = activeCategory === 'All' ? products : products.filter(p => p.category === activeCategory);
-
-  const handleAddToCart = (product: Product) => {
-    addToCart({
-      id: product.id,
-      name: product.name,
-      seller: product.seller,
-      price: product.price,
-      description: product.description,
-      category: product.category,
-      whatsapp: product.whatsapp,
-    });
-  };
+  const filteredSellers = activeCategory === 'All' ? sellers : sellers.filter(s => s.category === activeCategory);
 
   return (
     <section id="directory" className="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-[#0a1525]">
@@ -215,7 +136,7 @@ export default function Directory() {
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
           {allCategories.map((category) => {
             const isActive = activeCategory === category;
-            const count = category === 'All' ? products.length : products.filter(p => p.category === category).length;
+            const count = category === 'All' ? sellers.length : sellers.filter(s => s.category === category).length;
 
             return (
               <button
@@ -246,33 +167,33 @@ export default function Directory() {
         {/* Results count */}
         <div className="text-center mb-6">
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Showing <span className="font-semibold text-[#0f2b4a] dark:text-white">{filteredProducts.length}</span>{' '}
-            {filteredProducts.length === 1 ? 'product' : 'products'}
+            Showing <span className="font-semibold text-[#0f2b4a] dark:text-white">{filteredSellers.length}</span>{' '}
+            {filteredSellers.length === 1 ? 'seller' : 'sellers'}
             {activeCategory !== 'All' && (
               <span> in <span className="font-semibold text-[#0f2b4a] dark:text-white">{activeCategory}</span></span>
             )}
           </p>
         </div>
 
-        {/* Product Cards Grid */}
+        {/* Seller Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-          {filteredProducts.map((product) => (
+          {filteredSellers.map((seller) => (
             <article
-              key={product.id}
-              className="seller-card bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm dark:shadow-none flex flex-col"
+              key={seller.id}
+              className="seller-card bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm dark:shadow-none"
             >
               {/* Card Header with gradient accent */}
               <div className="h-2 bg-gradient-to-r from-[#0f2b4a] to-blue-600 dark:from-orange-500 dark:to-orange-400"></div>
 
-              <div className="p-5 sm:p-6 flex flex-col flex-grow">
+              <div className="p-5 sm:p-6">
                 {/* Top row: Category badge + Verified badge */}
                 <div className="flex items-center justify-between mb-4">
-                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${getBadgeClass(product.category)}`}>
-                    {getCategoryIcon(product.category)}
-                    {product.category}
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${getBadgeClass(seller.category)}`}>
+                    {getCategoryIcon(seller.category)}
+                    {seller.category}
                   </span>
 
-                  {product.verified && (
+                  {seller.verified && (
                     <div className="verified-badge flex items-center gap-1 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded-full px-2.5 py-1">
                       <svg className="w-3.5 h-3.5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -282,67 +203,42 @@ export default function Directory() {
                   )}
                 </div>
 
-                {/* Product Name */}
+                {/* Seller Name */}
                 <h3 className="text-lg sm:text-xl font-bold text-[#0f2b4a] dark:text-white mb-2 break-words">
-                  {product.name}
+                  {seller.name}
                 </h3>
 
-                {/* Seller Name */}
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                  by <span className="font-semibold text-[#0f2b4a] dark:text-orange-400">{product.seller}</span>
-                </p>
-
                 {/* Description */}
-                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 flex-grow">
-                  {product.description}
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-5">
+                  {seller.description}
                 </p>
 
-                {/* Price */}
-                <div className="mb-4">
-                  <span className="text-2xl font-bold text-orange-500 dark:text-orange-400">
-                    {formatPrice(product.price)}
-                  </span>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex gap-2">
-                  {/* View Details Button */}
-                  <button
-                    onClick={() => setSelectedProduct(product)}
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-semibold rounded-xl text-sm transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                    Details
-                  </button>
-
-                  {/* Add to Cart Button */}
-                  <button
-                    onClick={() => handleAddToCart(product)}
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl text-sm transition-colors shadow-md shadow-orange-500/20"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
-                    </svg>
-                    Add to Cart
-                  </button>
-                </div>
+                {/* WhatsApp Contact Button */}
+                <a
+                  href={`https://wa.me/${seller.whatsapp}?text=${encodeURIComponent(`Hi! 👋 I found your listing on ABSU Trusted Trades.\n\nI'm interested in "${seller.name}" (${seller.category}).\n\nCan you tell me more about what you offer? 🙏`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="whatsapp-btn w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-white font-semibold rounded-xl text-sm"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                  Contact via WhatsApp
+                </a>
               </div>
             </article>
           ))}
         </div>
 
         {/* Empty state */}
-        {filteredProducts.length === 0 && (
+        {filteredSellers.length === 0 && (
           <div className="text-center py-12">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
               <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <p className="text-gray-500 dark:text-gray-400 text-lg font-medium">No products in this category yet.</p>
+            <p className="text-gray-500 dark:text-gray-400 text-lg font-medium">No sellers in this category yet.</p>
             <p className="text-gray-400 dark:text-gray-500 text-sm mt-1">Check back soon or try another category.</p>
           </div>
         )}
@@ -354,16 +250,11 @@ export default function Directory() {
               <svg className="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              More products are being added. Check back soon!
+              More sellers are being verified. Check back soon!
             </span>
           </p>
         </div>
       </div>
-
-      {/* Product Modal */}
-      {selectedProduct && (
-        <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
-      )}
     </section>
   );
 }
