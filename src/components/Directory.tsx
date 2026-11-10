@@ -49,6 +49,14 @@ const sellers: Seller[] = [
     whatsapp: '2347064580909',
     verified: true,
   },
+  {
+    id: 6,
+    name: "Nnamdi Jerry Ikenna",
+    category: 'Fashion',
+    description: "Men's and women's wear for ABSU students. Electrical Engineering 100lvl.",
+    whatsapp: '2348060822674',
+    verified: true,
+  },
 ];
 
 const allCategories = ['All', ...Array.from(new Set(sellers.map(s => s.category)))];
